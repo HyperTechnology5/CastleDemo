@@ -1,0 +1,64 @@
+language: android
+
+notifications:
+  email: false
+
+sudo: false
+
+jdk:
+  - oraclejdk8
+
+android:
+  components:
+    - tools
+    - platform-tools
+    
+    - build-tools-26.0.0
+    - android-26
+
+    # Additional components
+    #- extra-google-google_play_services
+    #- extra-google-m2repository
+    #- extra-android-m2repository
+    #- addon-google_apis-google-19
+
+    # Specify at least one system image,
+    # if you need to run emulator(s) during your tests
+    #- sys-img-armeabi-v7a-android-22
+    #- sys-img-armeabi-v7a-android-17
+#branches:
+#  only:
+#  - master
+
+install:
+  - . $HOME/.nvm/nvm.sh
+  - nvm install stable
+  - nvm use stable
+  - npm version
+  - npm install -g cordova
+  - npm install -g typescript
+  - echo y  | android update sdk -u -a -t android-25
+  #- echo y | android update sdk -u --filter android-22,android-23
+
+before_script:
+  - cordova platform rm android
+  - cordova platform add android
+
+script:
+  - bash prep.sh validate
+  - cordova prepare
+  - cordova build android --release -- --keystore=my.keystore --storePassword="$STORE_SECRET" --password="$KEY_SECRET" --alias=ht5
+  - bash prep.sh package
+  
+deploy:
+  provider: releases
+  api_key:
+    secure: Q+ooVl60/1sYyyOtDOZacb+0VzlPkxDPNV3hrc+Kci95OtMn9cw/3ZmQSim3XYLiKNmiq7WMiP9VLl1PMp14eQGicaA1vjWY0pTAw53DAJecZ31sc4CffbCPLFAJgVi93mS2v5zc/SBODjhApTEl2VIXJGH8Ez72jkk+rIDazjlegGUi1MVZN+kkr9SgbHLOOViZ6s5EYuEJO0NPQPeidKQn9n106ES2DbuYrE4HhDfApTIP9Sxz8PkP44yre0YqFN2VpFpoRrrYgOi5CQPIUW0XRUaohFqDxZIimW1/lqWqPZfc4lOZz7xQsY1H7EUS8twYLUdQ6MLDdKkM8pofX+261mHfeX9uC/2nI8yrb0BvDQ2A6EvfXnw66S9gi4xSAWIIq92NBynTohMx8vl63JcviRsYrABEadmnVNOJZfZZLHiCdJ5SY7+ev87/sAS5hcR8annD6thXLVYJs4KEVwnWq2I5ooHGTGuxpCNOFy3otXx7c2GbPx4R2uBcqbHIDQZrp9OUQTyaBn3TNp/QKUjkEkNn1eVeu5KY0oD/T5NwUZYl9XwGTd7ZSkEtDczOXzBQcVPy2ZyJShf4zKfnTi28Irg3N19AU2tqhNMgraUv0UIErV7V/YUpXfAO1FsN9r0eu20f3hdYdlYcurO//oakUIjZ7KVLMLQLQrEbdA8=
+  skip_cleanup: true
+  file:
+    - CastleDemo.apk
+    - RELEASE_NOTES.md
+  on:
+    repo: HyperTechnology5/CastleDemo
+    tags: true
+
