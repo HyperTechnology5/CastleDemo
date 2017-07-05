@@ -1,7 +1,7 @@
 #!/bin/sh
 
 name=$(basename "$TRAVIS_REPO_SLUG")
-[ -z "$name" ] && name=StressBlaster
+[ -z "$name" ] && name=$(basename $(cd . && pwd))
 cfg_ver=$(grep '<widget ' config.xml | sed -e 's/^.*version="//' -e 's/".*$//')
 #echo "Building version: $cfg_ver"
 

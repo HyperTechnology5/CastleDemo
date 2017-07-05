@@ -11,5 +11,6 @@
     <access origin="*" />
     <hook src="scripts/appBeforeBuild.sh" type="before_run" />
     <hook src="scripts/appBeforeBuild.sh" type="before_build" />
+    <engine name="android" spec="~6.2.3" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
 </widget>
