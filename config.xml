@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+l<?xml version='1.0' encoding='utf-8'?>
 <widget id="net.oink.ht5.castledemo" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Castle Demo</name>
     <description>
@@ -7,6 +7,7 @@
     <author email="alejandro_liu@hotmail.com" href="http://hypertechnology5.github.io">
         Hyper Technology 5 Team
     </author>
+    <icon src="www/img/logo.png" />
     <content src="index.html" />
     <access origin="*" />
     <hook src="scripts/appBeforeBuild.sh" type="before_run" />
